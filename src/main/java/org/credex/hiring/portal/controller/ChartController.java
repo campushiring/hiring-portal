@@ -17,10 +17,9 @@ public class ChartController {
     @Autowired
     private CampusDao campusDao;
 
-    @GetMapping("/counts/{driveType}")
+    @GetMapping("/counts")
     public Map<String, Long> getCounts() {
         return campusDao.getCounts();
-
     }
 }
 

@@ -19,7 +19,6 @@ import java.util.Map;
 public class CampusDaoImpl implements CampusDao {
     @Autowired
     private SessionFactory sessionFactory;
-    //Session session = sessionFactory.getCurrentSession();
     @Override
     @Transactional
     public Map<String, Long> getCounts() {
