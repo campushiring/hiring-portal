@@ -1,12 +1,10 @@
 package org.credex.hiring.portal.service;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Service;
 
+import org.credex.hiring.portal.model.CampusType;
 
-@Service
-public class ChartService {
+import java.util.Map;
 
+public interface ChartService {
 
+    Map<String, Long> getCounts();
 }

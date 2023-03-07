@@ -1,12 +1,16 @@
 package org.credex.hiring.portal.dao;
+import org.credex.hiring.portal.model.CampusType;
 import org.credex.hiring.portal.model.Chart;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,20 +21,23 @@ public class CampusDaoImpl implements CampusDao {
     private SessionFactory sessionFactory;
     //Session session = sessionFactory.getCurrentSession();
     @Override
-    public Chart countSelectedStudents(@RequestParam(name = "selected_Id", required = false)Integer selected_Id) {
+    @Transactional
+    public Map<String, Long> getCounts() {
         Session session = sessionFactory.getCurrentSession();
-        if (selected_Id == null) {
-            return null;
-        }
-        Chart ch = session.get(Chart.class, selected_Id);
-        return ch;
-    }
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Long> cqSelectedStudents = cb.createQuery(Long.class);
+        Root<Chart> rootSelectedStudents = cqSelectedStudents.from(Chart.class);
+        cqSelectedStudents.select(cb.count(rootSelectedStudents.get("selectedStudents")));
+        Long selectedStudentsCount = session.createQuery(cqSelectedStudents).getSingleResult();
 
-    @Override
-    public Map<String, Integer> countCampusTypes() {
-        //Session session = sessionFactory.getCurrentSession();
-        Map<String, Integer> map1 = new HashMap<>();
-        map1.put("simr",1);
-        return map1;
+        CriteriaQuery<Long> cqCampusTypes = cb.createQuery(Long.class);
+        Root<Chart> rootCampusTypes = cqCampusTypes.from(Chart.class);
+        cqCampusTypes.select(cb.count(rootCampusTypes.get("id"))).where(cb.equal(rootCampusTypes.get("campusType"), CampusType.ON));
+        Long onCampusCount = session.createQuery(cqCampusTypes).getSingleResult();
+
+        Map<String, Long> countsMap = new HashMap<>();
+        countsMap.put("selectedStudentsCount", selectedStudentsCount);
+        countsMap.put("onCampusCount", onCampusCount);
+        return countsMap;
     }
 }
