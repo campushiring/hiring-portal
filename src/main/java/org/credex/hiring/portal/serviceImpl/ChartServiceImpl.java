@@ -1,8 +1,11 @@
-package org.credex.hiring.portal.service;
+package org.credex.hiring.portal.serviceImpl;
 import org.credex.hiring.portal.dao.CampusDao;
+import org.credex.hiring.portal.model.CampusType;
+import org.credex.hiring.portal.service.ChartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Map;
 
 
 @Service
@@ -12,13 +15,10 @@ public class ChartServiceImpl implements ChartService {
 
 
     @Override
-    @Transactional
-    public Long countSelectedStudents(int user_id) {
-        return campusDao.countSelectedStudents(user_id);
+    public Map<String, Long> getCounts() {
+        return campusDao.getCounts();
     }
 
-    @Override
-    public Long countCampusTypes(String CampusType) {
-        return campusDao.countCampusTypes(CampusType);
-    }
+
+
 }

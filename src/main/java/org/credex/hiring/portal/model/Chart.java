@@ -9,18 +9,17 @@ public class Chart {
     @Column(name = "user_id")
     private Long id;
 
-    public String getCampusType() {
+    public CampusType getCampusType() {
         return campusType;
     }
 
-    public void setCampusType(String campusType) {
+    public void setCampusType(CampusType campusType) {
         this.campusType = campusType;
     }
 
     @Column(name = "campus_type")
-    private String campusType;
-
-
+    @Enumerated(value = EnumType.STRING)
+    private CampusType campusType;
 
     public int getSelectedStudents() {
         return selectedStudents;
