@@ -1,7 +1,5 @@
 package org.credex.hiring.portal.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-
 import javax.persistence.*;
 
 

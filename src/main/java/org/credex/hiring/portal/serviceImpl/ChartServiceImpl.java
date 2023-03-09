@@ -1,6 +1,5 @@
 package org.credex.hiring.portal.serviceImpl;
 import org.credex.hiring.portal.dao.CampusDao;
-import org.credex.hiring.portal.model.CampusType;
 import org.credex.hiring.portal.service.ChartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

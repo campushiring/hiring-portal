@@ -17,12 +17,6 @@ public class UserDaoImpl implements UserDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public void saveUser(Users user) {
-        Session session = sessionFactory.getCurrentSession();
-        session.save(user);
-    }
-
-    @Override
     @Transactional
     public Users createUser(Users user) {
         Session session = sessionFactory.getCurrentSession();
@@ -30,32 +24,44 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
-//    @Override
-//    public void updateUser(Users user) {
-//        Session session = sessionFactory.getCurrentSession();
-//        session.update(user);
-//    }
-//
-//
-//    @Override
-//    public void deleteUser(int userId) {
-//        Session session = sessionFactory.getCurrentSession();
-//        Users user = getUserById(userId);
-//        session.delete(user);
-//    }
-//
-//    @Override
-//    public Users getUserById(int userId) {
-//        Session session = sessionFactory.getCurrentSession();
-//        Users user = session.get(Users.class, userId);
-//        return user;
-//    }
-//
-//    @Override
-//    public List<Users> getAllUsers() {
-//        Session session = sessionFactory.getCurrentSession();
-//        Query<Users> query = session.createQuery("FROM Users", Users.class);
-//        List<Users> users = query.getResultList();
-//        return users;
-//    }
+    @Override
+    @Transactional
+    public Users updateUser(Users user) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(user);
+        return user;
+    }
+
+
+    @Override
+    @Transactional
+    public String  deleteUser(int userId) {
+
+        Boolean aBoolean = deleteById(Users.class, userId);
+        return "This {userId} has been deleted";
+    }
+
+    public <T> boolean deleteById (Class<T> clazz, int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Object ob = (Object) session.load(clazz, id);
+        session.delete(ob);
+        session.flush();
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public Users getUserById(int userId) {
+        Session session = sessionFactory.getCurrentSession();
+        Users user = session.get(Users.class, userId);
+        return user;
+    }
+    @Override
+    @Transactional
+    public List<Users> getAllUsers() {
+        Session session = sessionFactory.getCurrentSession();
+        Query<Users> query = session.createQuery("FROM Users", Users.class);
+        List<Users> users = query.getResultList();
+        return users;
+    }
 }

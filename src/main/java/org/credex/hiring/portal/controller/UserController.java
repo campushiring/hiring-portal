@@ -19,30 +19,29 @@ public class UserController {
     @Autowired
     private UserDao userDao;
 
-//    @GetMapping("/users")
-//    public List<Users> getAllUsers() {
-//        return userDao.getAllUsers();
-//    }
-//
-//    @GetMapping("/users/{userId}")
-//    public Users getUserById(@PathVariable int userId) {
-//        return userDao.getUserById(userId);
-//    }
-
     @PostMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public Users createUser(@RequestBody Users user) {
-      return userDao.createUser(user);
+        return userDao.createUser(user);
 
     }
+    @GetMapping("/allusers")
+    public List<Users> getAllUsers() {
+        return userDao.getAllUsers();
+    }
 
-//    @PutMapping("/users/{userId}")
-//    public void updateUser(@PathVariable int userId, @RequestBody Users user) {
-//        user.setUserid(userId);
-//        userDao.updateUser(user);
-//    }
-//
-//    @DeleteMapping("/users/{userId}")
-//    public void deleteUser(@PathVariable int userId) {
-//        userDao.deleteUser(userId);
-//    }
+    @GetMapping("/usersbyId/{userId}")
+    public Users getUserById(@PathVariable int userId) {
+        return userDao.getUserById(userId);
+    }
+
+
+    @PutMapping("/update/users")
+    public Users updateUser(@RequestParam int userId, @RequestBody Users user) {
+        return userDao.updateUser(user);
+    }
+
+    @DeleteMapping("/delete/users/{userId}")
+    public String deleteUser(@PathVariable("userId") int userId) {
+       return userDao.deleteUser(userId);
+    }
 }
