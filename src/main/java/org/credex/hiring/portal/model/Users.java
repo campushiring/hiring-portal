@@ -1,5 +1,7 @@
 package org.credex.hiring.portal.model;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 
 
@@ -17,7 +19,7 @@ public class Users {
 
     @Column(name = "sel_status")
     private boolean status;
-    @Column(name = "email")
+    @Column(name = "email",unique = true)
     private String emailId;
     @Column(name = "password")
     private String password;
@@ -25,6 +27,7 @@ public class Users {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+
     @Column(name = "role_id")
     private int  roleId;
     @Column(name = "exp")
@@ -33,9 +36,21 @@ public class Users {
     @Column(name = "lang_pref")
     private String language;
 
-    public Users(int userid, boolean status, String emailId,
-                 String password, String firstName, String lastName, int roleId,
-                 String experience, String language) {
+    @Column(name = "Skills")
+    private String skills;
+
+    @Column(name = "resume_link")
+    private String resumeLink;
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public Users(int userid, boolean status, String emailId, String password, String firstName, String lastName, int roleId, String experience, String language, String skills, String resumeLink) {
         this.userid = userid;
         this.status = status;
         this.emailId = emailId;
@@ -45,6 +60,8 @@ public class Users {
         this.roleId = roleId;
         this.experience = experience;
         this.language = language;
+        this.skills = skills;
+        this.resumeLink = resumeLink;
     }
 
     public int getUserid() {
@@ -95,13 +112,7 @@ public class Users {
         this.lastName = lastName;
     }
 
-    public int getRoleId() {
-        return roleId;
-    }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
-    }
 
     public String getExperience() {
         return experience;
@@ -119,8 +130,21 @@ public class Users {
         this.language = language;
     }
 
+    public String getSkills() {
+        return skills;
+    }
 
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
 
+    public String getResumeLink() {
+        return resumeLink;
+    }
+
+    public void setResumeLink(String resumeLink) {
+        this.resumeLink = resumeLink;
+    }
 
 
     }
