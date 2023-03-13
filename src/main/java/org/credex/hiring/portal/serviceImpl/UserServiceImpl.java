@@ -1,7 +1,8 @@
-package org.credex.hiring.portal.service;
+package org.credex.hiring.portal.serviceImpl;
 
 import org.credex.hiring.portal.dao.UserDao;
 import org.credex.hiring.portal.model.Users;
+import org.credex.hiring.portal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
