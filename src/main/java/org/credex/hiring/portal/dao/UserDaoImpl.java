@@ -1,5 +1,6 @@
 package org.credex.hiring.portal.dao;
 
+import org.credex.hiring.portal.model.Role;
 import org.credex.hiring.portal.model.Users;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,8 +21,13 @@ public class UserDaoImpl implements UserDao {
     @Transactional
     public Users createUser(Users user) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(user);
+        try {
+            session.save(user);
+        }finally {
+            session.flush();
+        }
         return user;
+
     }
 
     @Override
